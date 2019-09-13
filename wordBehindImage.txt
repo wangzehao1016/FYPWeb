@@ -1,0 +1,1 @@
+Virtual chess playing on screen is well developed, how about real physical chess playing with a robotic arm and camera? Android App may be developed and view the positions by camera, then instruct the Bluetooth connected robotic arm for moving. The shape and pattern of chess components may need developing.

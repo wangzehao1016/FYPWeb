@@ -5,11 +5,18 @@ class App extends React.Component {
       pageIndex: 0,
       width: 0,
       height: 0,
+      imageFocus: false,
+      wordAfterImage: '',
     }
   }
   componentDidMount() {
     this.updateWindowDimensions();
     window.addEventListener('resize', this.updateWindowDimensions);
+    fetch('./wordBehindImage.txt')
+      .then(r => r.text())
+      .then(text => {
+        this.setState({ wordAfterImage: text })
+      })
   }
 
   componentWillUnmount() {
@@ -37,6 +44,12 @@ class App extends React.Component {
   onAbout = () => {
     this.setState({ pageIndex: 3 })
   }
+  focusImage = () => {
+    this.setState({ imageFocus: true })
+  }
+  blurImage = () => {
+    this.setState({ imageFocus: false })
+  }
   applyRatioHeight(por) {
     const { height } = this.state
     return height * por / 100
@@ -60,7 +73,84 @@ class App extends React.Component {
     }
   }
   renderScreen0 = () => {
-    return <h1>page0</h1>
+    return (
+      <div
+        style={{
+          width: this.applyRatioWidth(90),
+          height: this.applyRatioHeight(70),
+          borderRadius: this.applyRatioHeight(2),
+          border: '1px solid grey',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}
+      >
+        <div
+          style={{
+            width: this.applyRatioWidth(30),
+            height: this.applyRatioHeight(33),
+            borderRadius: this.applyRatioHeight(1),
+          }}
+        >
+          <img
+            src='./robot.jpg'
+            style={{
+              width: this.applyRatioWidth(30),
+              height: this.applyRatioHeight(33),
+              borderRadius: this.applyRatioHeight(1),
+              opacity: this.state.imageFocus ? 0.2 : 1,
+              transition: 'opacity 500ms 0ms',
+            }}
+            onMouseEnter={() => this.focusImage()}
+            onMouseOut={() => this.blurImage()}
+          />
+          <p onMouseEnter={() => this.focusImage()}
+            onMouseOut={() => this.blurImage()}
+            style={{
+              width: this.applyRatioWidth(50),
+              fontSize: Math.min(
+                this.applyRatioWidth(2),
+                this.applyRatioHeight(4)
+              ),
+              borderRadius: this.applyRatioHeight(1),
+              fontFamily: 'Times New Roman',
+              textAlign: 'justify',
+              opacity: this.state.imageFocus ? 1 : 0,
+              transition: 'opacity 500ms 0ms',
+              marginTop: this.applyRatioHeight(-31),
+              marginLeft: this.applyRatioWidth(-12),
+              padding: Math.min(
+                this.applyRatioWidth(2),
+                this.applyRatioHeight(4)
+              ),
+              border: '1px solid grey',
+            }}>{this.state.wordAfterImage}</p>
+        </div>
+        <p style={{
+          fontSize: Math.min(
+            this.applyRatioWidth(3),
+            this.applyRatioHeight(6)
+          ),
+          fontFamily: 'Times New Roman'
+        }}>AI Chess With Robotic Arm & Without Screen</p>
+        <p style={{
+          fontSize: Math.min(
+            this.applyRatioWidth(1),
+            this.applyRatioHeight(2)
+          ),
+          fontFamily: 'Times New Roman'
+        }}>Supervisor: Dr. Vincent Lau</p>
+        <p style={{
+          fontSize: Math.min(
+            this.applyRatioWidth(1),
+            this.applyRatioHeight(2)
+          ),
+          fontFamily: 'Times New Roman'
+        }}
+        >Student: Wang Zehao</p>
+      </div>
+    )
   }
   renderScreen1 = () => {
     return <h1>page1</h1>
@@ -76,6 +166,7 @@ class App extends React.Component {
     let buttonStyle = {
       width: this.applyRatioWidth(10),
       height: this.applyRatioHeight(5),
+      borderRadius: this.applyRatioHeight(2),
       fontSize: Math.min(
         this.applyRatioWidth(1),
         this.applyRatioHeight(2)
@@ -83,16 +174,50 @@ class App extends React.Component {
       fontFamily: 'Times New Roman',
       color: 'white',
       backgroundColor: 'black',
-      fontWeight: '800'
+      fontWeight: '800',
+      borderColor: 'transparent',
     }
     return (
-      <div style={{ width: this.applyRatioWidth(100), height: this.applyRatioWidth(100), WebkitTransition: 'all', msTransition: 'all', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-        <div style={{ height: this.applyRatioHeight(10), width: this.applyRatioWidth(100), display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly', alignItems: 'center' }}>
+      <div style={{
+        width: this.applyRatioWidth(100),
+        height: this.applyRatioHeight(100),
+        WebkitTransition: 'all',
+        msTransition: 'all',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center'
+      }}>
+        <div style={{
+          width: this.applyRatioWidth(100),
+          height: this.applyRatioHeight(10),
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          alignItems: 'center'
+        }}>
           <button onClick={this.onMain} style={buttonStyle}>Main Page</button>
           <button onClick={this.onStage} style={buttonStyle}>Stages</button>
           <button onClick={this.onPlan} style={buttonStyle}>Project Plan</button>
           <button onClick={this.onAbout} style={buttonStyle}>About</button>
         </div>
+        <div style={{
+          height: this.applyRatioHeight(1.5),
+          width: this.applyRatioWidth(100),
+          backgroundColor: 'black'
+        }} />
+        <div style={{
+          height: this.applyRatioHeight(2),
+          width: this.applyRatioWidth(100)
+        }} />
+        <div style={{
+          height: this.applyRatioHeight(1.5),
+          width: this.applyRatioWidth(100),
+          backgroundColor: 'black'
+        }} />
+        <div style={{
+          height: this.applyRatioHeight(5),
+          width: this.applyRatioWidth(100)
+        }} />
         <div>{this.renderScreen(pageIndex)}</div>
       </div>
     )
