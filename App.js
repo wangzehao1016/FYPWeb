@@ -153,7 +153,40 @@ class App extends React.Component {
     )
   }
   renderScreen1 = () => {
-    return <h1>page1</h1>
+    return <div style={{
+      width: this.applyRatioWidth(90),
+      height: this.applyRatioHeight(70),
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'space-evenly'
+    }}>
+      <div style={{
+        width: this.applyRatioWidth(44),
+        height: this.applyRatioHeight(70),
+        borderRadius: this.applyRatioHeight(2),
+        border: '1px solid grey',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}><p style={{
+        fontSize: Math.min(
+          this.applyRatioWidth(1),
+          this.applyRatioHeight(2)
+        ),
+        fontFamily: 'Times New Roman'
+      }}>Stage 1</p></div>
+      <div style={{
+        width: this.applyRatioWidth(44),
+        height: this.applyRatioHeight(70),
+        borderRadius: this.applyRatioHeight(2),
+        border: '1px solid grey',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}></div></div>
   }
   renderScreen2 = () => {
     return <h1>page2</h1>
